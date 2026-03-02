@@ -6,106 +6,110 @@
   <title>HPHP Intelligence Platform</title>
   <style>
     /* =====================================================================
-       RESET & BASE
+       WORDPRESS FULL-BLEED BREAKOUT
+       Escapes the theme's content-width container so the page fills 100vw.
+       Works when pasted as a Custom HTML block on a normal WP page.
     ===================================================================== */
-    *, *::before, *::after {
+    .hphp-root {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow-x: hidden;
+      /* Reset any inherited WP theme styles */
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Scope all styles inside .hphp-root to avoid bleeding into WP theme */
+    .hphp-root *, .hphp-root *::before, .hphp-root *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --bg-base:        #080d1a;
-      --bg-section:     #0b1121;
-      --bg-alt:         #0e1628;
-      --bg-card:        #111b2e;
-      --bg-card-hover:  #162038;
-      --border-subtle:  rgba(99, 148, 220, 0.15);
-      --border-hover:   rgba(99, 148, 220, 0.40);
-      --accent:         #4a90d9;
-      --accent-glow:    rgba(74, 144, 217, 0.35);
-      --accent-light:   #6fb3f2;
-      --text-primary:   #e8edf5;
-      --text-secondary: #9ab0cc;
-      --text-muted:     #607a96;
-      --heading-white:  #f0f4fa;
-      --radius:         8px;
-      --radius-lg:      14px;
-      --transition:     0.25s ease;
+      --teal:    #1BACB2;
+      --orange:  #FD6D06;
+      --blue:    #5B7BFF;
+      --magenta: #CF18AA;
+
+      --teal-glow:    rgba(27, 172, 178, 0.32);
+      --orange-glow:  rgba(253, 109, 6, 0.32);
+      --blue-glow:    rgba(91, 123, 255, 0.32);
+      --magenta-glow: rgba(207, 24, 170, 0.32);
+
+      --bg-base:       #07080f;
+      --bg-section:    #0a0c16;
+      --bg-alt:        #0c0f1c;
+      --bg-card:       #0f1222;
+      --bg-card-hover: #131729;
+
+      --border-subtle: rgba(91, 123, 255, 0.13);
+      --border-hover:  rgba(91, 123, 255, 0.38);
+
+      --text-primary:   #e8edf8;
+      --text-secondary: #8a9abf;
+      --text-muted:     #536080;
+      --heading-white:  #f0f4fc;
+
+      --radius:    8px;
+      --radius-lg: 14px;
+      --transition: 0.25s ease;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
-    body {
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-base);
+    .hphp-root {
+      background: var(--bg-base);
       color: var(--text-primary);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* =====================================================================
-       TYPOGRAPHY UTILITIES
-    ===================================================================== */
-    h1, h2, h3, h4 {
-      color: var(--heading-white);
-      line-height: 1.2;
-      font-weight: 700;
-    }
+    /* TYPOGRAPHY */
+    .hphp-root h1, .hphp-root h2, .hphp-root h3, .hphp-root h4 { color: var(--heading-white); line-height: 1.2; font-weight: 700; }
+    .hphp-root p { color: var(--text-secondary); }
 
-    p {
-      color: var(--text-secondary);
-    }
-
-    /* =====================================================================
-       LAYOUT
-    ===================================================================== */
+    /* LAYOUT */
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
+      width: 100%;
+      padding: 0 80px;
     }
 
-    section {
-      padding: 100px 0;
-    }
+    section { padding: 120px 0; }
 
     .section-label {
       display: inline-block;
       font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 800;
-      color: var(--heading-white);
+      color: var(--teal);
       margin-bottom: 16px;
     }
 
-    .section-lead {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      max-width: 680px;
-      line-height: 1.75;
+    .section-title {
+      font-size: clamp(2rem, 3vw, 2.9rem);
+      font-weight: 800;
+      color: var(--heading-white);
+      margin-bottom: 18px;
     }
 
-    /* =====================================================================
-       NAVIGATION
-    ===================================================================== */
+    .section-lead {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 760px;
+      line-height: 1.85;
+    }
+
+    /* NAV */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(8, 13, 26, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(7, 8, 15, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -113,265 +117,322 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 66px;
     }
 
     .nav-brand {
       font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      font-weight: 800;
+      letter-spacing: 0.08em;
       color: var(--heading-white);
       text-decoration: none;
     }
+    .nav-brand .nt { color: var(--teal); }
+    .nav-brand .no { color: var(--orange); }
 
-    .nav-brand span {
-      color: var(--accent);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
 
     .nav-links a {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
       transition: color var(--transition);
     }
+    .nav-links a:hover { color: var(--teal); }
 
-    .nav-links a:hover {
-      color: var(--accent-light);
+    .nav-cta {
+      padding: 8px 22px;
+      background: var(--teal);
+      color: #fff !important;
+      border-radius: var(--radius);
+      font-weight: 700 !important;
+      transition: background var(--transition), box-shadow var(--transition) !important;
+    }
+    .nav-cta:hover {
+      background: #22d4dc !important;
+      box-shadow: 0 0 18px var(--teal-glow) !important;
+      color: #fff !important;
     }
 
-    /* =====================================================================
-       HERO SECTION
-    ===================================================================== */
+    /* HERO */
     #hero {
-      padding: 140px 0 120px;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
       position: relative;
       overflow: hidden;
       background: var(--bg-base);
     }
 
-    #hero::before {
-      content: '';
+    .hero-bg-mesh {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74, 144, 217, 0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 20% 100%, rgba(74, 144, 217, 0.06) 0%, transparent 60%);
+        radial-gradient(ellipse 65% 55% at 8% 18%,  rgba(27,172,178,0.14)  0%, transparent 60%),
+        radial-gradient(ellipse 50% 45% at 92% 78%,  rgba(207,24,170,0.11)  0%, transparent 60%),
+        radial-gradient(ellipse 45% 40% at 72% 8%,   rgba(91,123,255,0.10)  0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 28% 92%,  rgba(253,109,6,0.08)   0%, transparent 60%);
       pointer-events: none;
     }
 
-    /* Subtle grid overlay */
-    #hero::after {
-      content: '';
+    .hero-grid-overlay {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(74, 144, 217, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(74, 144, 217, 0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(91,123,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,123,255,0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
       pointer-events: none;
     }
 
-    .hero-content {
+    .hero-inner {
       position: relative;
       z-index: 1;
-      text-align: center;
-      max-width: 860px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 130px 0 110px;
     }
 
     .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--border-subtle);
-      background: rgba(74, 144, 217, 0.07);
+      color: var(--teal);
+      border: 1px solid rgba(27,172,178,0.28);
+      background: rgba(27,172,178,0.07);
       padding: 6px 16px;
       border-radius: 100px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal-glow);
     }
 
     .hero-headline {
-      font-size: clamp(2.6rem, 6vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
       color: var(--heading-white);
-      margin-bottom: 24px;
-      line-height: 1.1;
+      margin-bottom: 22px;
+      line-height: 1.05;
     }
-
-    .hero-headline span {
-      color: var(--accent-light);
-    }
+    .hero-headline .c-teal    { color: var(--teal); }
+    .hero-headline .c-orange  { color: var(--orange); }
+    .hero-headline .c-blue    { color: var(--blue); }
+    .hero-headline .c-magenta { color: var(--magenta); }
 
     .hero-subheadline {
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-size: 1.2rem;
       font-weight: 500;
       color: var(--text-secondary);
       margin-bottom: 20px;
-      letter-spacing: 0.01em;
+      line-height: 1.7;
     }
 
     .hero-body {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      max-width: 680px;
-      margin: 0 auto 48px;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 48px;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Hero visual panel */
+    .hero-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    /* =====================================================================
-       BUTTONS
-    ===================================================================== */
+    .hero-tool-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      border-left: 3px solid var(--chip-color);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .hero-tool-chip:hover {
+      transform: translateY(-3px);
+      border-color: var(--chip-color);
+      box-shadow: 0 6px 24px var(--chip-glow);
+    }
+
+    .hero-tool-chip.c1 { --chip-color: var(--teal);    --chip-glow: var(--teal-glow); }
+    .hero-tool-chip.c2 { --chip-color: var(--orange);  --chip-glow: var(--orange-glow); }
+    .hero-tool-chip.c3 { --chip-color: var(--blue);    --chip-glow: var(--blue-glow); }
+    .hero-tool-chip.c4 { --chip-color: var(--magenta); --chip-glow: var(--magenta-glow); }
+    .hero-tool-chip.c5 { --chip-color: var(--teal);    --chip-glow: var(--teal-glow); }
+    .hero-tool-chip.c6 { --chip-color: var(--orange);  --chip-glow: var(--orange-glow); }
+
+    .chip-num {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--chip-color);
+      margin-bottom: 8px;
+    }
+    .chip-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--heading-white);
+      line-height: 1.35;
+    }
+
+    /* BUTTONS */
     .btn-primary {
       display: inline-block;
-      padding: 14px 34px;
-      background: var(--accent);
+      padding: 15px 38px;
+      background: var(--teal);
       color: #fff;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
       letter-spacing: 0.04em;
       text-decoration: none;
       border-radius: var(--radius);
       border: 1px solid transparent;
       transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
     }
-
     .btn-primary:hover {
-      background: var(--accent-light);
-      box-shadow: 0 0 22px var(--accent-glow);
+      background: #22d4dc;
+      box-shadow: 0 0 24px var(--teal-glow);
       transform: translateY(-1px);
     }
 
     .btn-outline {
       display: inline-block;
-      padding: 14px 34px;
+      padding: 15px 38px;
       background: transparent;
-      color: var(--accent-light);
-      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       text-decoration: none;
       border-radius: var(--radius);
       border: 1px solid var(--border-hover);
-      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition), transform var(--transition), color var(--transition);
     }
-
     .btn-outline:hover {
-      background: rgba(74, 144, 217, 0.1);
-      box-shadow: 0 0 18px var(--accent-glow);
-      border-color: var(--accent);
+      background: rgba(91,123,255,0.09);
+      box-shadow: 0 0 20px var(--blue-glow);
+      border-color: var(--blue);
+      color: #fff;
       transform: translateY(-1px);
     }
 
     .btn-tool {
       display: inline-block;
-      padding: 11px 26px;
+      padding: 10px 24px;
       background: transparent;
-      color: var(--accent-light);
-      font-size: 0.85rem;
-      font-weight: 600;
+      color: var(--tc);
+      font-size: 0.84rem;
+      font-weight: 700;
       letter-spacing: 0.05em;
       text-decoration: none;
       border-radius: var(--radius);
-      border: 1px solid rgba(99, 148, 220, 0.35);
-      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+      border: 1px solid var(--tc);
+      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
     }
-
     .btn-tool:hover {
-      background: rgba(74, 144, 217, 0.12);
-      box-shadow: 0 0 16px var(--accent-glow);
-      border-color: var(--accent);
+      background: color-mix(in srgb, var(--tc) 12%, transparent);
+      box-shadow: 0 0 16px var(--tc-glow);
       transform: translateY(-1px);
     }
 
-    /* =====================================================================
-       OVERVIEW SECTION
-    ===================================================================== */
+    /* OVERVIEW */
     #overview {
       background: var(--bg-section);
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .overview-header {
-      max-width: 620px;
-      margin-bottom: 60px;
-    }
+    .overview-header { max-width: 680px; margin-bottom: 64px; }
 
-    .framework-grid {
+    /* Bento grid */
+    .framework-bento {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
     }
 
     .framework-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--fc-color);
       border-radius: var(--radius-lg);
-      padding: 28px 26px;
-      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      padding: 30px 28px;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition), transform var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .framework-card:hover {
+      background: var(--bg-card-hover);
+      box-shadow: 0 0 28px color-mix(in srgb, var(--fc-color) 20%, transparent);
+      transform: translateY(-2px);
     }
 
-    .framework-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 0 20px rgba(74, 144, 217, 0.12);
-      background: var(--bg-card-hover);
+    .fc-1 { grid-column: span 5; --fc-color: var(--teal); }
+    .fc-2 { grid-column: span 7; --fc-color: var(--orange); }
+    .fc-3 { grid-column: span 4; --fc-color: var(--blue); }
+    .fc-4 { grid-column: span 4; --fc-color: var(--magenta); }
+    .fc-5 { grid-column: span 4; --fc-color: var(--teal); }
+    .fc-6 {
+      grid-column: span 12;
+      --fc-color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 40px;
     }
 
     .framework-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px; height: 42px;
       border-radius: 10px;
-      background: rgba(74, 144, 217, 0.1);
-      border: 1px solid rgba(74, 144, 217, 0.2);
+      border: 1px solid var(--fc-color);
+      background: color-mix(in srgb, var(--fc-color) 12%, transparent);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 16px;
-      font-size: 1.2rem;
+      margin-bottom: 14px;
+      font-size: 1rem;
+      color: var(--fc-color);
+      flex-shrink: 0;
     }
+    .fc-6 .framework-icon { margin-bottom: 0; }
 
-    .framework-card h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--heading-white);
-      margin-bottom: 8px;
-    }
+    .framework-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--heading-white); margin-bottom: 10px; }
+    .framework-card p  { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
+    .fc-6-text h3 { margin-bottom: 4px; }
 
-    .framework-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    /* =====================================================================
-       TOOLS SECTION
-    ===================================================================== */
-    #tools {
-      background: var(--bg-base);
-    }
+    /* TOOLS */
+    #tools { background: var(--bg-base); }
 
     .tools-header {
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto 72px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 72px;
+      gap: 32px;
+    }
+    .tools-header-left { max-width: 560px; }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
     }
 
     .tool-card {
@@ -379,226 +440,240 @@
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       padding: 44px 48px;
-      margin-bottom: 28px;
-      transition: border-color var(--transition), box-shadow var(--transition);
       position: relative;
       overflow: hidden;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      --tc: var(--teal);
+      --tc-glow: var(--teal-glow);
     }
+    .tool-card.accent-orange  { --tc: var(--orange);  --tc-glow: var(--orange-glow); }
+    .tool-card.accent-blue    { --tc: var(--blue);    --tc-glow: var(--blue-glow); }
+    .tool-card.accent-magenta { --tc: var(--magenta); --tc-glow: var(--magenta-glow); }
 
     .tool-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--tc), transparent);
       opacity: 0;
       transition: opacity var(--transition);
     }
-
-    .tool-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 8px 40px rgba(74, 144, 217, 0.1);
+    /* Watermark number */
+    .tool-card::after {
+      content: attr(data-num);
+      position: absolute;
+      right: 52px; top: 36px;
+      font-size: 5.5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--tc);
+      opacity: 0.05;
+      line-height: 1;
+      pointer-events: none;
+      transition: opacity var(--transition);
     }
-
-    .tool-card:hover::before {
-      opacity: 1;
-    }
+    .tool-card:hover { border-color: var(--tc); box-shadow: 0 8px 52px var(--tc-glow); }
+    .tool-card:hover::before { opacity: 1; }
+    .tool-card:hover::after  { opacity: 0.1; }
 
     .tool-card-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      height: 100%;
     }
 
     .tool-number {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
-      color: var(--accent);
+      letter-spacing: 0.2em;
+      color: var(--tc);
       text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .tool-title {
-      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
-      font-weight: 800;
-      color: var(--heading-white);
-      margin-bottom: 14px;
-      letter-spacing: -0.01em;
-    }
-
-    .tool-intro {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 24px;
-    }
-
-    .tool-what-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
       margin-bottom: 12px;
     }
-
-    .tool-bullets {
-      list-style: none;
-      margin-bottom: 28px;
+    .tool-title {
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      font-weight: 800;
+      color: var(--heading-white);
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
     }
-
-    .tool-bullets li {
-      font-size: 0.9rem;
+    .tool-intro {
+      font-size: 1.05rem;
       color: var(--text-secondary);
-      padding: 7px 0;
-      padding-left: 20px;
-      position: relative;
-      border-bottom: 1px solid rgba(99, 148, 220, 0.07);
-      line-height: 1.6;
-    }
-
-    .tool-bullets li:last-child {
-      border-bottom: none;
-    }
-
-    .tool-bullets li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .tool-why-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .tool-why {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
+      line-height: 1.85;
       margin-bottom: 32px;
     }
 
-    /* =====================================================================
-       ECOSYSTEM SECTION
-    ===================================================================== */
+    .tool-what-label, .tool-why-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .tool-what-label { color: var(--tc); }
+    .tool-why-label  { color: var(--text-muted); margin-top: 22px; }
+
+    .tool-bullets { list-style: none; margin-bottom: 4px; }
+    .tool-bullets li::marker { content: ''; display: none; }
+    .tool-bullets li {
+      list-style: none;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      padding: 10px 0 10px 24px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      line-height: 1.7;
+    }
+    .tool-bullets li:last-child { border-bottom: none; }
+    .tool-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--tc);
+      box-shadow: 0 0 6px var(--tc-glow);
+    }
+    .tool-why {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+    }
+
+    /* ECOSYSTEM */
     #ecosystem {
       background: var(--bg-alt);
       border-top: 1px solid var(--border-subtle);
-      border-bottom: 1px solid var(--border-subtle);
     }
 
     .ecosystem-header {
-      max-width: 640px;
-      margin-bottom: 64px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 72px;
     }
+
+    .ecosystem-stat-row {
+      display: flex;
+      gap: 44px;
+      align-items: flex-end;
+    }
+    .eco-stat { text-align: center; }
+    .eco-stat-num {
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .eco-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .eco-stat:nth-child(1) .eco-stat-num { color: var(--teal); }
+    .eco-stat:nth-child(2) .eco-stat-num { color: var(--orange); }
+    .eco-stat:nth-child(3) .eco-stat-num { color: var(--blue); }
 
     .ecosystem-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
     .ecosystem-item {
-      display: flex;
-      gap: 18px;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 24px 22px;
-      transition: border-color var(--transition), box-shadow var(--transition);
+      padding: 28px 26px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
     }
-
     .ecosystem-item:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 0 18px rgba(74, 144, 217, 0.1);
+      border-color: var(--ei-color);
+      box-shadow: 0 0 24px var(--ei-glow);
+      transform: translateY(-3px);
     }
+    .ecosystem-item:nth-child(1) { --ei-color: var(--teal);    --ei-glow: var(--teal-glow); }
+    .ecosystem-item:nth-child(2) { --ei-color: var(--blue);    --ei-glow: var(--blue-glow); }
+    .ecosystem-item:nth-child(3) { --ei-color: var(--orange);  --ei-glow: var(--orange-glow); }
+    .ecosystem-item:nth-child(4) { --ei-color: var(--magenta); --ei-glow: var(--magenta-glow); }
+    .ecosystem-item:nth-child(5) { --ei-color: var(--teal);    --ei-glow: var(--teal-glow); }
+    .ecosystem-item:nth-child(6) { --ei-color: var(--orange);  --ei-glow: var(--orange-glow); }
 
-    .ecosystem-dot {
-      flex-shrink: 0;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin-top: 6px;
-      box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    .ecosystem-text h4 {
-      font-size: 0.92rem;
+    .ecosystem-num {
+      font-size: 0.62rem;
       font-weight: 700;
-      color: var(--heading-white);
-      margin-bottom: 6px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ei-color);
+      margin-bottom: 10px;
     }
+    .ecosystem-item h4 { font-size: 1.02rem; font-weight: 700; color: var(--heading-white); margin-bottom: 10px; }
+    .ecosystem-item p  { font-size: 0.95rem; color: var(--text-muted); line-height: 1.72; }
 
-    .ecosystem-text p {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    /* =====================================================================
-       CLOSING SECTION
-    ===================================================================== */
+    /* CLOSING */
     #closing {
-      background: var(--bg-section);
-      text-align: center;
+      background: var(--bg-base);
       position: relative;
       overflow: hidden;
     }
-
-    #closing::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(74, 144, 217, 0.1) 0%, transparent 70%);
+    .closing-gradient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 60% at 15% 50%,  rgba(27,172,178,0.13)  0%, transparent 60%),
+        radial-gradient(ellipse 45% 55% at 85% 50%,  rgba(207,24,170,0.11)  0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 0%,   rgba(91,123,255,0.08)  0%, transparent 60%);
       pointer-events: none;
     }
 
-    .closing-content {
+    .closing-inner {
       position: relative;
       z-index: 1;
-      max-width: 680px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 80px;
+      align-items: center;
     }
 
     .closing-headline {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 18px;
+      line-height: 1.1;
     }
+    .closing-headline .c-teal   { color: var(--teal); }
+    .closing-headline .c-orange { color: var(--orange); }
 
     .closing-body {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 44px;
+      line-height: 1.85;
+      max-width: 660px;
     }
 
-    /* =====================================================================
-       FOOTER
-    ===================================================================== */
+    .closing-right {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      min-width: 230px;
+    }
+    .closing-right .btn-primary,
+    .closing-right .btn-outline { text-align: center; padding: 15px 32px; }
+
+    /* FOOTER */
     footer {
       background: var(--bg-base);
       border-top: 1px solid var(--border-subtle);
-      padding: 36px 0;
+      padding: 34px 0;
     }
-
     .footer-inner {
       display: flex;
       align-items: center;
@@ -606,172 +681,185 @@
       flex-wrap: wrap;
       gap: 16px;
     }
+    .footer-brand { font-size: 0.92rem; font-weight: 800; color: var(--text-secondary); letter-spacing: 0.06em; }
+    .footer-brand .ft { color: var(--teal); }
+    .footer-brand .fo { color: var(--orange); }
 
-    .footer-brand {
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a {
       font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      letter-spacing: 0.05em;
-    }
-
-    .footer-brand span {
-      color: var(--accent);
-    }
-
-    .footer-note {
-      font-size: 0.78rem;
       color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--teal); }
+    .footer-note { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 60px; padding: 100px 0 80px; }
+      .hero-visual { max-width: 520px; }
+      .ecosystem-header { grid-template-columns: 1fr; gap: 32px; }
+      .ecosystem-stat-row { justify-content: flex-start; }
+      .closing-inner { grid-template-columns: 1fr; gap: 44px; }
+      .closing-right { flex-direction: row; min-width: auto; }
+      .closing-right .btn-primary,
+      .closing-right .btn-outline { width: auto; }
     }
 
-    /* =====================================================================
-       DIVIDER
-    ===================================================================== */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
-      margin: 0;
-    }
-
-    /* =====================================================================
-       RESPONSIVE
-    ===================================================================== */
     @media (max-width: 900px) {
-      .tool-card-inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .tool-card {
-        padding: 32px 28px;
-      }
-
-      nav .nav-links {
-        display: none;
-      }
+      .container { padding: 0 40px; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .tool-card { padding: 36px 32px; }
+      .ecosystem-grid { grid-template-columns: 1fr 1fr; }
+      .fc-1, .fc-2, .fc-3, .fc-4, .fc-5 { grid-column: span 6; }
+      .fc-6 { grid-column: span 12; flex-direction: column; align-items: flex-start; gap: 12px; }
+      nav .nav-links { display: none; }
+      .tools-header { flex-direction: column; align-items: flex-start; }
     }
 
     @media (max-width: 600px) {
-      section {
-        padding: 72px 0;
-      }
-
-      #hero {
-        padding: 100px 0 80px;
-      }
-
-      .tool-card {
-        padding: 28px 20px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      section { padding: 80px 0; }
+      .container { padding: 0 16px; }
+      .tool-card { padding: 28px 22px; }
+      .tool-card::after { display: none; }
+      .ecosystem-grid { grid-template-columns: 1fr; }
+      .fc-1, .fc-2, .fc-3, .fc-4, .fc-5 { grid-column: span 12; }
+      .hero-visual { grid-template-columns: 1fr; }
+      .footer-links { display: none; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .closing-right { flex-direction: column; }
     }
   </style>
 </head>
 <body>
+<div class="hphp-root">
 
-  <!-- ====================================================================
-       NAVIGATION
-  ==================================================================== -->
   <nav>
     <div class="container nav-inner">
-      <a href="#" class="nav-brand">HPHP <span>Intelligence</span></a>
+      <a href="#" class="nav-brand">HPHP <span class="nt">Intelligence</span> <span class="no">Platform</span></a>
       <ul class="nav-links">
         <li><a href="#overview">Overview</a></li>
         <li><a href="#tools">Tools</a></li>
         <li><a href="#ecosystem">Ecosystem</a></li>
-        <li><a href="#closing">Contact</a></li>
+        <li><a href="https://hphealthplan.com/contact/" target="_blank" rel="noopener noreferrer" class="nav-cta">Get Started</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- ====================================================================
-       HERO
-  ==================================================================== -->
   <section id="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid-overlay"></div>
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-eyebrow">Proprietary Employer Intelligence</div>
-        <h1 class="hero-headline">HPHP <span>Intelligence</span> Platform</h1>
-        <p class="hero-subheadline">
-          An integrated system for employer health plan cost control, risk management, compliance oversight, and workforce financial impact.
-        </p>
-        <p class="hero-body">
-          Six proprietary advisory tools operating together to give plan sponsors real-time visibility, financial accountability, and strategic clarity across every dimension of their health plan. From fiduciary protection to benefit design optimization, the platform converts fragmented data into decisive governance.
-        </p>
-        <div class="hero-actions">
-          <a href="#tools" class="btn-primary">Explore the Tools</a>
-          <a href="#closing" class="btn-outline">Schedule a Strategy Session</a>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-eyebrow">Proprietary Employer Intelligence</div>
+          <h1 class="hero-headline">
+            Health Plan<br>
+            <span class="c-teal">Intelligence</span><br>
+            <span class="c-orange">Platform</span>
+          </h1>
+          <p class="hero-subheadline">
+            An integrated system for employer health plan cost control, risk management, compliance oversight, and workforce financial impact.
+          </p>
+          <p class="hero-body">
+            Six proprietary advisory tools operating together to give plan sponsors real-time visibility, financial accountability, and strategic clarity — from fiduciary protection to benefit design optimization.
+          </p>
+          <div class="hero-actions">
+            <a href="#tools" class="btn-primary">Explore the Tools</a>
+            <a href="https://hphealthplan.com/contact/" target="_blank" rel="noopener noreferrer" class="btn-outline">Schedule a Strategy Session</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-visual">
+            <div class="hero-tool-chip c1">
+              <div class="chip-num">Tool 01</div>
+              <div class="chip-name">Paycheck Protection Score</div>
+            </div>
+            <div class="hero-tool-chip c2">
+              <div class="chip-num">Tool 02</div>
+              <div class="chip-name">Fiduciary Guard</div>
+            </div>
+            <div class="hero-tool-chip c3">
+              <div class="chip-num">Tool 03</div>
+              <div class="chip-name">Actuarial Value Calculator</div>
+            </div>
+            <div class="hero-tool-chip c4">
+              <div class="chip-num">Tool 04</div>
+              <div class="chip-name">Trend Calculator</div>
+            </div>
+            <div class="hero-tool-chip c5">
+              <div class="chip-num">Tool 05</div>
+              <div class="chip-name">Affordability Calculator</div>
+            </div>
+            <div class="hero-tool-chip c6">
+              <div class="chip-num">Tool 06</div>
+              <div class="chip-name">Employee Giveback Calculator</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================================================================
-       OVERVIEW
-  ==================================================================== -->
   <section id="overview">
     <div class="container">
       <div class="overview-header">
         <span class="section-label">Strategic Framework</span>
         <h2 class="section-title">An Integrated Advisory Infrastructure</h2>
-        <p class="section-lead">
-          Each tool within the platform is purpose-built to address a critical pillar of employer health plan governance. Together, they form a unified framework that closes the gaps between financial exposure, regulatory obligation, and workforce strategy.
-        </p>
+        <p class="section-lead">Each tool is purpose-built to address a critical pillar of employer health plan governance. Together they form a unified framework that closes the gaps between financial exposure, regulatory obligation, and workforce strategy.</p>
       </div>
-
-      <div class="framework-grid">
-        <div class="framework-card">
+      <div class="framework-bento">
+        <div class="framework-card fc-1">
           <div class="framework-icon">&#9724;</div>
           <h3>Financial Protection</h3>
           <p>Quantify and contain health plan cost exposure at the employer, plan, and employee level before risk compounds.</p>
         </div>
-        <div class="framework-card">
+        <div class="framework-card fc-2">
           <div class="framework-icon">&#9671;</div>
           <h3>Regulatory Protection</h3>
           <p>Maintain defensible, documented compliance posture across ACA requirements, affordability mandates, and fiduciary obligations.</p>
         </div>
-        <div class="framework-card">
+        <div class="framework-card fc-3">
           <div class="framework-icon">&#9632;</div>
           <h3>Plan Design Optimization</h3>
           <p>Model actuarial value against employee experience and employer cost to design plans that are competitive and financially sound.</p>
         </div>
-        <div class="framework-card">
+        <div class="framework-card fc-4">
           <div class="framework-icon">&#9650;</div>
           <h3>Trend &amp; Forecast Modeling</h3>
           <p>Apply credible medical and pharmacy trend data to project future plan costs and inform funding strategy decisions.</p>
         </div>
-        <div class="framework-card">
+        <div class="framework-card fc-5">
           <div class="framework-icon">&#9658;</div>
           <h3>Workforce Impact Strategy</h3>
           <p>Measure how health plan cost directly affects employee take-home pay and overall compensation competitiveness.</p>
         </div>
-        <div class="framework-card">
+        <div class="framework-card fc-6">
           <div class="framework-icon">&#9679;</div>
-          <h3>Employer Reinvestment Modeling</h3>
-          <p>Translate health plan savings into concrete reinvestment opportunities — wages, benefits, retirement contributions, and workforce development.</p>
+          <div class="fc-6-text">
+            <h3>Employer Reinvestment Modeling</h3>
+            <p>Translate health plan savings into concrete reinvestment opportunities — wages, benefits, retirement contributions, and workforce development.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================================================================
-       TOOLS
-  ==================================================================== -->
   <section id="tools">
     <div class="container">
       <div class="tools-header">
-        <span class="section-label">Proprietary Tools</span>
-        <h2 class="section-title">Six Instruments. One Strategic System.</h2>
-        <p class="section-lead">
-          Each tool delivers standalone analytical value while contributing to the broader platform intelligence. Access any tool directly or engage the full advisory ecosystem.
-        </p>
+        <div class="tools-header-left">
+          <span class="section-label">Proprietary Tools</span>
+          <h2 class="section-title">Six Instruments. One Strategic System.</h2>
+          <p class="section-lead">Each tool delivers standalone analytical value while contributing to the broader platform intelligence.</p>
+        </div>
       </div>
 
+      <div class="tools-grid">
+
       <!-- Tool 1: Paycheck Protection Score -->
-      <div class="tool-card">
+      <div class="tool-card" data-num="01">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 01</div>
@@ -798,7 +886,7 @@
       </div>
 
       <!-- Tool 2: Fiduciary Guard -->
-      <div class="tool-card">
+      <div class="tool-card accent-orange" data-num="02">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 02</div>
@@ -825,7 +913,7 @@
       </div>
 
       <!-- Tool 3: Actuarial Value Calculator -->
-      <div class="tool-card">
+      <div class="tool-card accent-blue" data-num="03">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 03</div>
@@ -852,7 +940,7 @@
       </div>
 
       <!-- Tool 4: Trend Calculator -->
-      <div class="tool-card">
+      <div class="tool-card accent-magenta" data-num="04">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 04</div>
@@ -879,7 +967,7 @@
       </div>
 
       <!-- Tool 5: Affordability Calculator -->
-      <div class="tool-card">
+      <div class="tool-card" data-num="05">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 05</div>
@@ -906,7 +994,7 @@
       </div>
 
       <!-- Tool 6: Employee Giveback Calculator -->
-      <div class="tool-card">
+      <div class="tool-card accent-orange" data-num="06">
         <div class="tool-card-inner">
           <div class="tool-left">
             <div class="tool-number">Tool 06</div>
@@ -932,94 +1020,99 @@
         </div>
       </div>
 
+      </div><!-- /tools-grid -->
+
     </div>
   </section>
 
-  <!-- ====================================================================
-       ECOSYSTEM
-  ==================================================================== -->
   <section id="ecosystem">
     <div class="container">
       <div class="ecosystem-header">
-        <span class="section-label">Platform Intelligence</span>
-        <h2 class="section-title">More Than Tools — A Strategic System</h2>
-        <p class="section-lead">
-          The six tools are designed to operate as an interconnected intelligence layer. Each instrument informs and amplifies the others — creating compounding analytical value that no single tool can produce in isolation.
-        </p>
+        <div>
+          <span class="section-label">Platform Intelligence</span>
+          <h2 class="section-title">More Than Tools — A Strategic System</h2>
+          <p class="section-lead">The six tools operate as an interconnected intelligence layer. Each instrument informs and amplifies the others — creating compounding analytical value that no single tool can produce in isolation.</p>
+        </div>
+        <div class="ecosystem-stat-row">
+          <div class="eco-stat">
+            <div class="eco-stat-num">6</div>
+            <div class="eco-stat-label">Proprietary Tools</div>
+          </div>
+          <div class="eco-stat">
+            <div class="eco-stat-num">1</div>
+            <div class="eco-stat-label">Integrated Platform</div>
+          </div>
+          <div class="eco-stat">
+            <div class="eco-stat-num">&infin;</div>
+            <div class="eco-stat-label">Strategic Clarity</div>
+          </div>
+        </div>
       </div>
-
       <div class="ecosystem-grid">
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Trend Drives Funding Strategy</h4>
-            <p>Medical cost trend projections establish the financial baseline that governs funding model selection, reserve adequacy, and long-range budget planning.</p>
-          </div>
+          <div class="ecosystem-num">01 &mdash; Trend</div>
+          <h4>Trend Drives Funding Strategy</h4>
+          <p>Medical cost trend projections establish the financial baseline that governs funding model selection, reserve adequacy, and long-range budget planning.</p>
         </div>
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Actuarial Value Shapes Competitiveness</h4>
-            <p>AV analysis ensures plan design decisions deliver measurable benefit value — enabling employers to compete on total compensation without sacrificing financial discipline.</p>
-          </div>
+          <div class="ecosystem-num">02 &mdash; Actuarial</div>
+          <h4>Actuarial Value Shapes Competitiveness</h4>
+          <p>AV analysis ensures plan design decisions deliver measurable benefit value — enabling employers to compete on total compensation without sacrificing financial discipline.</p>
         </div>
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Affordability Anchors Compliance</h4>
-            <p>Affordability thresholds determine whether the health plan creates regulatory exposure — and whether lower-wage employees can access the coverage offered to them.</p>
-          </div>
+          <div class="ecosystem-num">03 &mdash; Affordability</div>
+          <h4>Affordability Anchors Compliance</h4>
+          <p>Affordability thresholds determine whether the health plan creates regulatory exposure — and whether lower-wage employees can access the coverage offered to them.</p>
         </div>
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Paycheck Score Links Cost to Employee Health</h4>
-            <p>The Paycheck Protection Score connects plan cost directly to individual financial wellbeing — making the employer-employee cost relationship transparent and actionable.</p>
-          </div>
+          <div class="ecosystem-num">04 &mdash; Paycheck</div>
+          <h4>Paycheck Score Links Cost to Employee Health</h4>
+          <p>The Paycheck Protection Score connects plan cost directly to individual financial wellbeing — making the employer-employee cost relationship transparent and actionable.</p>
         </div>
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Fiduciary Guard Protects Leadership</h4>
-            <p>Executive and board-level exposure requires structured governance. Fiduciary Guard provides the documented oversight framework that protects named fiduciaries from personal liability.</p>
-          </div>
+          <div class="ecosystem-num">05 &mdash; Fiduciary</div>
+          <h4>Fiduciary Guard Protects Leadership</h4>
+          <p>Executive and board-level exposure requires structured governance. Fiduciary Guard provides the documented oversight framework that protects named fiduciaries from personal liability.</p>
         </div>
         <div class="ecosystem-item">
-          <div class="ecosystem-dot"></div>
-          <div class="ecosystem-text">
-            <h4>Employee Giveback Closes the Loop</h4>
-            <p>Savings generated through efficient plan design are not simply returned to the bottom line — they are modeled as reinvestment capital, transforming cost control into workforce strategy.</p>
-          </div>
+          <div class="ecosystem-num">06 &mdash; Giveback</div>
+          <h4>Employee Giveback Closes the Loop</h4>
+          <p>Savings generated through efficient plan design are modeled as reinvestment capital, transforming cost control into workforce strategy.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================================================================
-       CLOSING
-  ==================================================================== -->
   <section id="closing">
+    <div class="closing-gradient"></div>
     <div class="container">
-      <div class="closing-content">
-        <span class="section-label">Get Started</span>
-        <h2 class="closing-headline">Take Control of Your Health Plan.</h2>
-        <p class="closing-body">
-          The HPHP Intelligence Platform delivers the analytical infrastructure employers need to govern their health plan with the same rigor applied to any other major financial obligation. Measurable oversight, governance protection, and financial clarity — built into a single advisory ecosystem.
-        </p>
-        <a href="https://hphealthplan.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">Schedule a Strategy Session</a>
+      <div class="closing-inner">
+        <div class="closing-left">
+          <span class="section-label">Get Started</span>
+          <h2 class="closing-headline">Take <span class="c-teal">Control</span> of Your<br><span class="c-orange">Health Plan.</span></h2>
+          <p class="closing-body">The HPHP Intelligence Platform delivers the analytical infrastructure employers need to govern their health plan with the same rigor applied to any other major financial obligation. Measurable oversight, governance protection, and financial clarity — built into a single advisory ecosystem.</p>
+        </div>
+        <div class="closing-right">
+          <a href="https://hphealthplan.com/contact/" target="_blank" rel="noopener noreferrer" class="btn-primary">Schedule a Strategy Session</a>
+          <a href="#tools" class="btn-outline">Explore the Tools</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================================================================
-       FOOTER
-  ==================================================================== -->
   <footer>
     <div class="container footer-inner">
-      <div class="footer-brand">HPHP <span>Intelligence Platform</span></div>
+      <div class="footer-brand">HPHP <span class="ft">Intelligence</span> <span class="fo">Platform</span></div>
+      <ul class="footer-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#ecosystem">Ecosystem</a></li>
+        <li><a href="https://hphealthplan.com/contact/" target="_blank" rel="noopener noreferrer">Contact</a></li>
+      </ul>
       <div class="footer-note">&copy; 2026 HP Health Plan. All rights reserved.</div>
     </div>
   </footer>
 
+</div><!-- /.hphp-root -->
 </body>
 </html>
