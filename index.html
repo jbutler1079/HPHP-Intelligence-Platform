@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HPHP Intelligence Platform</title>
+  <style>
+    /* =====================================================================
+       RESET & BASE
+    ===================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-base:        #080d1a;
+      --bg-section:     #0b1121;
+      --bg-alt:         #0e1628;
+      --bg-card:        #111b2e;
+      --bg-card-hover:  #162038;
+      --border-subtle:  rgba(99, 148, 220, 0.15);
+      --border-hover:   rgba(99, 148, 220, 0.40);
+      --accent:         #4a90d9;
+      --accent-glow:    rgba(74, 144, 217, 0.35);
+      --accent-light:   #6fb3f2;
+      --text-primary:   #e8edf5;
+      --text-secondary: #9ab0cc;
+      --text-muted:     #607a96;
+      --heading-white:  #f0f4fa;
+      --radius:         8px;
+      --radius-lg:      14px;
+      --transition:     0.25s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =====================================================================
+       TYPOGRAPHY UTILITIES
+    ===================================================================== */
+    h1, h2, h3, h4 {
+      color: var(--heading-white);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+
+    /* =====================================================================
+       LAYOUT
+    ===================================================================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--heading-white);
+      margin-bottom: 16px;
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.75;
+    }
+
+    /* =====================================================================
+       NAVIGATION
+    ===================================================================== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 13, 26, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--heading-white);
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-light);
+    }
+
+    /* =====================================================================
+       HERO SECTION
+    ===================================================================== */
+    #hero {
+      padding: 140px 0 120px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-base);
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74, 144, 217, 0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 100%, rgba(74, 144, 217, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Subtle grid overlay */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(74, 144, 217, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 144, 217, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border-subtle);
+      background: rgba(74, 144, 217, 0.07);
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--heading-white);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+
+    .hero-headline span {
+      color: var(--accent-light);
+    }
+
+    .hero-subheadline {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-body {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 680px;
+      margin: 0 auto 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* =====================================================================
+       BUTTONS
+    ===================================================================== */
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      box-shadow: 0 0 22px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 14px 34px;
+      background: transparent;
+      color: var(--accent-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-hover);
+      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .btn-outline:hover {
+      background: rgba(74, 144, 217, 0.1);
+      box-shadow: 0 0 18px var(--accent-glow);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .btn-tool {
+      display: inline-block;
+      padding: 11px 26px;
+      background: transparent;
+      color: var(--accent-light);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: var(--radius);
+      border: 1px solid rgba(99, 148, 220, 0.35);
+      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .btn-tool:hover {
+      background: rgba(74, 144, 217, 0.12);
+      box-shadow: 0 0 16px var(--accent-glow);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* =====================================================================
+       OVERVIEW SECTION
+    ===================================================================== */
+    #overview {
+      background: var(--bg-section);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .overview-header {
+      max-width: 620px;
+      margin-bottom: 60px;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .framework-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px 26px;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .framework-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 20px rgba(74, 144, 217, 0.12);
+      background: var(--bg-card-hover);
+    }
+
+    .framework-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(74, 144, 217, 0.1);
+      border: 1px solid rgba(74, 144, 217, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+
+    .framework-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--heading-white);
+      margin-bottom: 8px;
+    }
+
+    .framework-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =====================================================================
+       TOOLS SECTION
+    ===================================================================== */
+    #tools {
+      background: var(--bg-base);
+    }
+
+    .tools-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 72px;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 44px 48px;
+      margin-bottom: 28px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .tool-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 40px rgba(74, 144, 217, 0.1);
+    }
+
+    .tool-card:hover::before {
+      opacity: 1;
+    }
+
+    .tool-card-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .tool-number {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tool-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+      font-weight: 800;
+      color: var(--heading-white);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .tool-intro {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .tool-what-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .tool-bullets {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .tool-bullets li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding: 7px 0;
+      padding-left: 20px;
+      position: relative;
+      border-bottom: 1px solid rgba(99, 148, 220, 0.07);
+      line-height: 1.6;
+    }
+
+    .tool-bullets li:last-child {
+      border-bottom: none;
+    }
+
+    .tool-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .tool-why-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .tool-why {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    /* =====================================================================
+       ECOSYSTEM SECTION
+    ===================================================================== */
+    #ecosystem {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .ecosystem-header {
+      max-width: 640px;
+      margin-bottom: 64px;
+    }
+
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .ecosystem-item {
+      display: flex;
+      gap: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .ecosystem-item:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 18px rgba(74, 144, 217, 0.1);
+    }
+
+    .ecosystem-dot {
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    .ecosystem-text h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--heading-white);
+      margin-bottom: 6px;
+    }
+
+    .ecosystem-text p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =====================================================================
+       CLOSING SECTION
+    ===================================================================== */
+    #closing {
+      background: var(--bg-section);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #closing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(74, 144, 217, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .closing-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .closing-headline {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .closing-body {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 44px;
+    }
+
+    /* =====================================================================
+       FOOTER
+    ===================================================================== */
+    footer {
+      background: var(--bg-base);
+      border-top: 1px solid var(--border-subtle);
+      padding: 36px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-brand span {
+      color: var(--accent);
+    }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* =====================================================================
+       DIVIDER
+    ===================================================================== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+      margin: 0;
+    }
+
+    /* =====================================================================
+       RESPONSIVE
+    ===================================================================== */
+    @media (max-width: 900px) {
+      .tool-card-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .tool-card {
+        padding: 32px 28px;
+      }
+
+      nav .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 72px 0;
+      }
+
+      #hero {
+        padding: 100px 0 80px;
+      }
+
+      .tool-card {
+        padding: 28px 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================================
+       NAVIGATION
+  ==================================================================== -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="nav-brand">HPHP <span>Intelligence</span></a>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#ecosystem">Ecosystem</a></li>
+        <li><a href="#closing">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ====================================================================
+       HERO
+  ==================================================================== -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Proprietary Employer Intelligence</div>
+        <h1 class="hero-headline">HPHP <span>Intelligence</span> Platform</h1>
+        <p class="hero-subheadline">
+          An integrated system for employer health plan cost control, risk management, compliance oversight, and workforce financial impact.
+        </p>
+        <p class="hero-body">
+          Six proprietary advisory tools operating together to give plan sponsors real-time visibility, financial accountability, and strategic clarity across every dimension of their health plan. From fiduciary protection to benefit design optimization, the platform converts fragmented data into decisive governance.
+        </p>
+        <div class="hero-actions">
+          <a href="#tools" class="btn-primary">Explore the Tools</a>
+          <a href="#closing" class="btn-outline">Schedule a Strategy Session</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       OVERVIEW
+  ==================================================================== -->
+  <section id="overview">
+    <div class="container">
+      <div class="overview-header">
+        <span class="section-label">Strategic Framework</span>
+        <h2 class="section-title">An Integrated Advisory Infrastructure</h2>
+        <p class="section-lead">
+          Each tool within the platform is purpose-built to address a critical pillar of employer health plan governance. Together, they form a unified framework that closes the gaps between financial exposure, regulatory obligation, and workforce strategy.
+        </p>
+      </div>
+
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">&#9724;</div>
+          <h3>Financial Protection</h3>
+          <p>Quantify and contain health plan cost exposure at the employer, plan, and employee level before risk compounds.</p>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">&#9671;</div>
+          <h3>Regulatory Protection</h3>
+          <p>Maintain defensible, documented compliance posture across ACA requirements, affordability mandates, and fiduciary obligations.</p>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">&#9632;</div>
+          <h3>Plan Design Optimization</h3>
+          <p>Model actuarial value against employee experience and employer cost to design plans that are competitive and financially sound.</p>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">&#9650;</div>
+          <h3>Trend &amp; Forecast Modeling</h3>
+          <p>Apply credible medical and pharmacy trend data to project future plan costs and inform funding strategy decisions.</p>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">&#9658;</div>
+          <h3>Workforce Impact Strategy</h3>
+          <p>Measure how health plan cost directly affects employee take-home pay and overall compensation competitiveness.</p>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">&#9679;</div>
+          <h3>Employer Reinvestment Modeling</h3>
+          <p>Translate health plan savings into concrete reinvestment opportunities — wages, benefits, retirement contributions, and workforce development.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       TOOLS
+  ==================================================================== -->
+  <section id="tools">
+    <div class="container">
+      <div class="tools-header">
+        <span class="section-label">Proprietary Tools</span>
+        <h2 class="section-title">Six Instruments. One Strategic System.</h2>
+        <p class="section-lead">
+          Each tool delivers standalone analytical value while contributing to the broader platform intelligence. Access any tool directly or engage the full advisory ecosystem.
+        </p>
+      </div>
+
+      <!-- Tool 1: Paycheck Protection Score -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 01</div>
+            <h2 class="tool-title">Paycheck Protection Score</h2>
+            <p class="tool-intro">
+              The Paycheck Protection Score directly measures the financial burden a health plan places on individual employees by benchmarking premium contributions against actual take-home pay. This tool makes the invisible visible — converting abstract plan costs into a clear metric of employee financial health.
+            </p>
+            <a href="https://hphealthplan.com/paycheck-protection-score/" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Calculates the percentage of net income consumed by employee health plan contributions</li>
+              <li>Identifies employee cohorts at elevated financial risk due to premium burden</li>
+              <li>Benchmarks contribution levels against workforce compensation bands</li>
+              <li>Generates a scored output for plan design and affordability review</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              When health plan contributions consume a disproportionate share of employee wages, employers face downstream consequences: voluntary turnover, reduced productivity, and talent acquisition failure. The Paycheck Protection Score gives plan sponsors an objective, defensible metric to evaluate employee-facing plan cost — and the evidence needed to act on it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 2: Fiduciary Guard -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 02</div>
+            <h2 class="tool-title">Fiduciary Guard</h2>
+            <p class="tool-intro">
+              Fiduciary Guard is a risk assessment and documentation framework designed for employers with self-funded or partially self-funded health plans. It evaluates plan governance against ERISA fiduciary standards and identifies areas of legal and financial exposure at the executive and board level.
+            </p>
+            <a href="https://hphealthplan.com/fiduciary-guard/" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Assesses plan governance against ERISA fiduciary obligations</li>
+              <li>Identifies documentation gaps that create personal liability exposure</li>
+              <li>Evaluates vendor oversight, claims review, and plan amendment processes</li>
+              <li>Produces a defensible risk profile and remediation priority list</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              ERISA fiduciary liability is personal. Board members, executives, and named plan administrators can face individual legal and financial consequences when plan governance fails. Fiduciary Guard provides the structured oversight framework that separates organizations with documented governance from those operating on assumption.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 3: Actuarial Value Calculator -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 03</div>
+            <h2 class="tool-title">Actuarial Value Calculator</h2>
+            <p class="tool-intro">
+              The Actuarial Value (AV) Calculator quantifies the relative generosity of a health plan design by measuring the percentage of total allowed costs the plan pays on behalf of a standard population. This metric is central to ACA compliance, benefit benchmarking, and plan design strategy.
+            </p>
+            <a href="https://hphealthplan.com/actuarial-value-calculator/index.html" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Calculates plan-level actuarial value based on cost-sharing design inputs</li>
+              <li>Benchmarks plan design against ACA metal tier thresholds</li>
+              <li>Models the employee cost-sharing impact of design changes</li>
+              <li>Supports benefit comparability analysis for multi-plan or multi-location employers</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              Actuarial value is the foundational measure of what a health plan is actually worth to the employee who uses it. Without this calculation, benefit design decisions are made without a calibrated reference point — creating misaligned cost structures, compliance gaps, and compensation equity issues across the workforce.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 4: Trend Calculator -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 04</div>
+            <h2 class="tool-title">Trend Calculator</h2>
+            <p class="tool-intro">
+              The Trend Calculator applies credible medical cost trend data to an employer's current health plan spend to produce multi-year cost projections. It gives CFOs and HR leadership a forward-looking model to stress-test funding assumptions and inform budget strategy before renewal.
+            </p>
+            <a href="https://hphealthplan.com/trend/" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Projects future plan cost using configurable medical and pharmacy trend rates</li>
+              <li>Models one-, three-, and five-year cost trajectories by input scenario</li>
+              <li>Generates employer and employee cost-share projections under each scenario</li>
+              <li>Provides benchmark context against national health cost trend indices</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              Health plan trend is the primary driver of long-term cost exposure for employers — yet most organizations enter renewal without a credible forward model. The Trend Calculator converts reactive budgeting into proactive financial governance, giving plan sponsors the data architecture needed to make informed, defensible funding decisions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 5: Affordability Calculator -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 05</div>
+            <h2 class="tool-title">Affordability Calculator</h2>
+            <p class="tool-intro">
+              The Affordability Calculator determines whether an employer's lowest-cost health plan option meets ACA affordability thresholds for each employee cohort. It provides the compliance infrastructure necessary to defend against employer shared responsibility penalties and workforce equity concerns.
+            </p>
+            <a href="https://hphealthplan.com/affordabilitycalculator/" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Calculates employee premium contributions as a percentage of household income under all three ACA safe harbors</li>
+              <li>Flags employees for whom the current plan fails to meet affordability standards</li>
+              <li>Models premium adjustment scenarios to restore affordability compliance</li>
+              <li>Generates a contribution-by-cohort compliance summary for audit readiness</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              ACA employer shared responsibility penalties are calculated per employee and accumulate rapidly when affordability standards are not met. Beyond compliance, affordability directly determines whether lower-wage employees can access the plan — a workforce stability issue that carries financial and reputational consequences for the organization.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 6: Employee Giveback Calculator -->
+      <div class="tool-card">
+        <div class="tool-card-inner">
+          <div class="tool-left">
+            <div class="tool-number">Tool 06</div>
+            <h2 class="tool-title">Employee Giveback Calculator</h2>
+            <p class="tool-intro">
+              The Employee Giveback Calculator transforms health plan savings into a concrete reinvestment strategy. When employers reduce health plan cost through smarter plan design, the tool models exactly how those savings can be redirected into wages, retirement contributions, enhanced benefits, and workforce development — making health plan efficiency a cultural and competitive asset.
+            </p>
+            <a href="https://hphealthplan.com/employee-giveback-calculator/" target="_blank" rel="noopener noreferrer" class="btn-tool">Open Tool &rarr;</a>
+          </div>
+          <div class="tool-right">
+            <div class="tool-what-label">What It Does</div>
+            <ul class="tool-bullets">
+              <li>Quantifies total employer savings generated by plan design changes or cost-reduction strategies</li>
+              <li>Models reallocation scenarios across wages, 401(k) match, PTO, and supplemental benefits</li>
+              <li>Calculates per-employee reinvestment value at multiple workforce size tiers</li>
+              <li>Produces a shareable reinvestment summary for board reporting and employee communications</li>
+            </ul>
+            <div class="tool-why-label">Why It Matters</div>
+            <p class="tool-why">
+              Health plan cost reduction is not simply a finance outcome — it is a workforce investment decision. The Employee Giveback Calculator makes that connection explicit and quantifiable, enabling employers to communicate the direct link between plan efficiency and employee compensation. This positions health plan strategy as a driver of organizational culture and long-term workforce alignment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ECOSYSTEM
+  ==================================================================== -->
+  <section id="ecosystem">
+    <div class="container">
+      <div class="ecosystem-header">
+        <span class="section-label">Platform Intelligence</span>
+        <h2 class="section-title">More Than Tools — A Strategic System</h2>
+        <p class="section-lead">
+          The six tools are designed to operate as an interconnected intelligence layer. Each instrument informs and amplifies the others — creating compounding analytical value that no single tool can produce in isolation.
+        </p>
+      </div>
+
+      <div class="ecosystem-grid">
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Trend Drives Funding Strategy</h4>
+            <p>Medical cost trend projections establish the financial baseline that governs funding model selection, reserve adequacy, and long-range budget planning.</p>
+          </div>
+        </div>
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Actuarial Value Shapes Competitiveness</h4>
+            <p>AV analysis ensures plan design decisions deliver measurable benefit value — enabling employers to compete on total compensation without sacrificing financial discipline.</p>
+          </div>
+        </div>
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Affordability Anchors Compliance</h4>
+            <p>Affordability thresholds determine whether the health plan creates regulatory exposure — and whether lower-wage employees can access the coverage offered to them.</p>
+          </div>
+        </div>
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Paycheck Score Links Cost to Employee Health</h4>
+            <p>The Paycheck Protection Score connects plan cost directly to individual financial wellbeing — making the employer-employee cost relationship transparent and actionable.</p>
+          </div>
+        </div>
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Fiduciary Guard Protects Leadership</h4>
+            <p>Executive and board-level exposure requires structured governance. Fiduciary Guard provides the documented oversight framework that protects named fiduciaries from personal liability.</p>
+          </div>
+        </div>
+        <div class="ecosystem-item">
+          <div class="ecosystem-dot"></div>
+          <div class="ecosystem-text">
+            <h4>Employee Giveback Closes the Loop</h4>
+            <p>Savings generated through efficient plan design are not simply returned to the bottom line — they are modeled as reinvestment capital, transforming cost control into workforce strategy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       CLOSING
+  ==================================================================== -->
+  <section id="closing">
+    <div class="container">
+      <div class="closing-content">
+        <span class="section-label">Get Started</span>
+        <h2 class="closing-headline">Take Control of Your Health Plan.</h2>
+        <p class="closing-body">
+          The HPHP Intelligence Platform delivers the analytical infrastructure employers need to govern their health plan with the same rigor applied to any other major financial obligation. Measurable oversight, governance protection, and financial clarity — built into a single advisory ecosystem.
+        </p>
+        <a href="https://hphealthplan.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">Schedule a Strategy Session</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       FOOTER
+  ==================================================================== -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">HPHP <span>Intelligence Platform</span></div>
+      <div class="footer-note">&copy; 2026 HP Health Plan. All rights reserved.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
